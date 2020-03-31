@@ -1,0 +1,90 @@
+﻿@model WEBUI.Models.FigureStore.FigureStoreDetailView
+
+@{
+    ViewBag.Title = "FigureStoreEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="navbar-header">
+        @Html.ActionLink("Figure", "AllFigures", "Figure", null, new { @class = "navbar-brand" })
+        @Html.ActionLink("Figure stores", "FigureStoreList", "Figurestore", null, new { @class = "navbar-brand" })
+    </div>
+</div>
+
+<div id="headerFigures">
+    <div class="title">Figures Store</div>
+</div>
+
+<table class="table">
+    <tr>
+        <th>
+            <span style="font-weight:normal">  Name:</span> @Html.DisplayFor(model => model.Name)
+        </th>
+        <th>
+            <span style="font-weight:normal"> Area: </span> @Html.DisplayFor(model => model.Area)
+        </th>
+        <th>
+           <span style="font-weight:normal">  Count Of Figures: </span> @Html.DisplayFor(model => model.CountOfFigures)
+        </th>
+        <th></th>
+    </tr>
+</table>
+
+<p>
+    <div class="span5">
+        @Html.ActionLink("Add Circle", "CirclesForAdd", new { storeId = Model.Id })
+    </div>
+    <div class="span5">
+        @Html.ActionLink("Add Square", "SquaresForAdd", new { storeId = Model.Id })
+    </div>
+    <div class="span5">
+        @Html.ActionLink("Add Rectangle", "RectanglesForAdd", new { storeId = Model.Id })
+    </div>
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            Area 
+        </th>
+        <th>
+            Info
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Figures)
+    {
+        int storeId = Model.Id;
+        int figureId = item.Id;
+        int idInStore = item.IdInStore.Value;
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Info)
+            </td>
+            <td>
+                @using (Html.BeginForm("RemoveFigureFrom", "FigureStore", FormMethod.Get, new { onclick = "return confirm('Are sure wants to remove ?');" }))
+                {
+                    @Html.HiddenFor(model => storeId)
+                    @Html.HiddenFor(model => figureId)
+                    @Html.HiddenFor(model => idInStore)
+                    <input type="submit" value="Delete" />
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    @Html.ActionLink("Back to Store List", "FigureStoreList")
+</div>

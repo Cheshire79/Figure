@@ -1,0 +1,79 @@
+﻿@using WEBUI.Models.Figures
+@model WEBUI.Models.Figures.RectanglesView
+
+@{
+    ViewBag.Title = "Rectangles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="navbar-header">
+        @Html.ActionLink("Figure", "AllFigures", "Figure", null, new { @class = "navbar-brand" })
+        @Html.ActionLink("Figure stores", "FigureStoreList", "Figurestore", null, new { @class = "navbar-brand" })
+    </div>
+</div>
+
+<div id="headerFigures">
+    <div class="title">Figures</div>
+</div>
+
+<div id="categoriesFigures">
+
+    @{ Html.RenderAction("FiguresMenu", "Figure", new { figureType = FigureType.Rectangle }); }
+
+
+</div>
+
+<div id="contentFigures">
+
+    <p>
+        @Html.ActionLink("Create New", "RectangleCreate")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Width
+            </th>
+            <th>
+                Height
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Rectangles)
+        {
+            int id = item.Id;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Width)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Height)
+                </td>
+                <td>
+                    <div class="span5">
+                        @using (Html.BeginForm("RectangleEdit", "Figure", FormMethod.Get/*, new { onclick = "return confirm('Are sure wants to delete store ?');" }*/))
+                        {
+                            @Html.HiddenFor(model => id)
+                            <input type="submit" value="Edit" />
+                        }
+                    </div>
+                    <div class="span5">
+                        @using (Html.BeginForm("RectangleDelete", "Figure", FormMethod.Post, new { onclick = "return confirm('Are sure wants to delete  ?');" }))
+                        {
+                            @Html.HiddenFor(model => id)
+                            <input type="submit" value="Delete" />
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+
+</div>

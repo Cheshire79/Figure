@@ -1,0 +1,74 @@
+﻿@model WEBUI.Models.FigureStore.FigureStoresView
+
+@{
+    ViewBag.Title = "FiguresStoreList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="navbar-header">
+        @Html.ActionLink("Figure", "AllFigures", "Figure", null, new { @class = "navbar-brand" })
+        @Html.ActionLink("Figure stores", "FigureStoreList", "Figurestore", null, new { @class = "navbar-brand" })
+    </div>
+</div>
+
+<div id="headerFigures">
+    <div class="title">Figures Stores</div>
+</div>
+
+<h5>
+    @Html.ActionLink("Create New", "StoreCreate")
+</h5>
+<table class="table">
+    <tr>
+        <th>
+           Name
+        </th>
+        <th>
+            Count
+        </th>
+        <th>
+            Area
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.FigureStores) {
+    int id = item.Id;
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CountOfFigures)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Area)
+        </td>
+        <td>
+            <div class="span5">
+                @using (Html.BeginForm("FigureStoreEdit", "FigureStore", FormMethod.Get))//, new { onclick = "return confirm('Are sure wants to edit ?');" }))
+                {
+                    @Html.HiddenFor(model => id)
+                <input type="submit" value="Details" />
+                }
+            </div>
+            <div class="span5">
+                @using (Html.BeginForm("StoreEdit", "FigureStore", FormMethod.Get))//, new { onclick = "return confirm('Are sure wants to edit ?');" }))
+                {
+                    @Html.HiddenFor(model => id)
+                     <input type="submit" value="Edit" />
+                }
+            </div>
+            <div class="span5">
+                @using (Html.BeginForm("FigureStoreDelete", "FigureStore", FormMethod.Post, new { onclick = "return confirm('Are sure wants to delete store ?');" }))
+                {
+                    @Html.HiddenFor(model => id)
+                    <input type="submit" value="Delete" />
+                }
+            </div>
+        </td>
+    </tr>
+}
+
+</table>

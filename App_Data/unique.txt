@@ -1,0 +1,1 @@
+https://decipherinfosys.wordpress.com/2007/11/30/multiple-null-values-in-a-unique-index-in-sql-serverdb2-luw/

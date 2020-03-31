@@ -1,0 +1,45 @@
+﻿@model WEBUI.Models.FigureStore.SquaresViewForAddingToStore
+
+@{
+    ViewBag.Title = "SquaresForAdd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Choose Square to add in @Html.DisplayFor(model => model.StoreName)</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Area
+        </th>
+        <th>
+            Side
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Squares)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Side)
+            </td>
+            <td>
+                @Html.ActionLink("Add", "AddSquare", new { storeId = Model.StoreId, figureId = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div>
+    @Html.ActionLink("Back to Store ", "FigureStoreEdit", new { id = Model.StoreId })
+</div>

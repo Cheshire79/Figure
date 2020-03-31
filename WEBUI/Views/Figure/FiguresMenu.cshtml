@@ -1,0 +1,23 @@
+﻿@using WEBUI.Models.Figures
+@model WEBUI.Models.Figures.FiguresMenuView
+@Html.ActionLink("All - Users", "AllFigures", "Figure",
+    new
+    {
+        @class = FigureType.All == Model.SelectedFigureType ? "selected" : null
+    })
+
+
+@foreach (var link in Model.Figures)
+{
+    @Html.RouteLink(link.Name, new
+    {
+        controller = "Figure",
+        action = link.ControllerName,
+        roleId = link.Type,
+        page = 1
+    },
+    new
+    {
+        @class = link.Type == Model.SelectedFigureType ? "selected" : null
+    })
+}

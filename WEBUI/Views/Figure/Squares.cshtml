@@ -1,0 +1,82 @@
+﻿@using WEBUI.HtmlHelpers
+@using WEBUI.Models.Figures
+@model WEBUI.Models.Figures.SquaresView
+
+@{
+    ViewBag.Title = "Squares";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="navbar-header">
+        @Html.ActionLink("Figure", "AllFigures", "Figure", null, new { @class = "navbar-brand" })
+        @Html.ActionLink("Figure stores", "FigureStoreList", "Figurestore", null, new { @class = "navbar-brand" })
+    </div>
+</div>
+
+<div id="headerFigures">
+    <div class="title">Figures</div>
+</div>
+
+<div id="categoriesFigures">
+
+    @{ Html.RenderAction("FiguresMenu", "Figure", new { figureType = FigureType.Square }); }
+
+
+</div>
+
+<div id="contentFigures">
+
+    <p>
+        @Html.ActionLink("Create New", "SquareCreate")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Side
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Squares)
+        {
+            int id = item.Id;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Side)
+                </td>
+                <td>
+                    <div class="span5">
+                        @using (Html.BeginForm("SquareEdit", "Figure", FormMethod.Get/*, new { onclick = "return confirm('Are sure wants to delete store ?');" }*/))
+                        {
+                            @Html.HiddenFor(model => id)
+                            <input type="submit" value="Edit" />
+                        }
+                    </div>
+                    <div class="span5">
+                        @using (Html.BeginForm("SquareDelete", "Figure", FormMethod.Post, new { onclick = "return confirm('Are sure wants to delete  ?');" }))
+                        {
+                            @Html.HiddenFor(model => id)
+                            <input type="submit" value="Delete" />
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </table>
+    
+</div>
+<div class="pager">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("Squares",
+        new { page = x }))
+</div>
+
+

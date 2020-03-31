@@ -1,0 +1,46 @@
+﻿@model WEBUI.Models.FigureStore.CirlcesViewForAddingToStore
+
+@{
+    ViewBag.Title = "AddCircles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Choose circle to add in @Html.DisplayFor(model => model.StoreName)</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Area
+        </th>
+        <th>
+            Radius
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Cirlces) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Area)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Radius)
+        </td>
+        <td>
+            @Html.ActionLink("Add", "AddCircle", new { storeId = Model.StoreId, figureId = item.Id }) 
+
+        </td>
+    </tr>
+}
+
+</table>
+
+<div>
+    @Html.ActionLink("Back to Store ", "FigureStoreEdit", new { id = Model.StoreId })
+</div>

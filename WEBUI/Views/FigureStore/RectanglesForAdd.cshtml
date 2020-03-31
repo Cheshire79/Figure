@@ -1,0 +1,53 @@
+﻿@model WEBUI.Models.FigureStore.RectanglesViewForAddingToStore
+
+@{
+    ViewBag.Title = "RectanglesForAdd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Choose rectangle to add in @Html.DisplayFor(model => model.StoreName)</h2>
+
+
+<table class="table">
+    
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Area
+        </th>
+        <th>
+            Width
+        </th>
+        <th>
+            Height
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Rectangles) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Width)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Height)
+            </td>
+            <td>
+                @Html.ActionLink("Add", "AddRectangle", new { storeId = Model.StoreId, figureId = item.Id }) 
+            </td>
+        </tr>
+    }
+</table>
+
+<div>
+    @Html.ActionLink("Back to Store ", "FigureStoreEdit", new { id = Model.StoreId })
+</div>

@@ -1,0 +1,107 @@
+﻿@using WEBUI.HtmlHelpers
+@using WEBUI.Models
+@using WEBUI.Models.Figures
+@using WEBUI.Models.Figures.Circle
+@model WEBUI.Models.Figures.CirlcesView
+
+@{
+    ViewBag.Title = "Circles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="navbar-header">
+        @Html.ActionLink("Figure", "AllFigures", "Figure", null, new { @class = "navbar-brand" })
+        @Html.ActionLink("Figure stores", "FigureStoreList", "Figurestore", null, new { @class = "navbar-brand" })
+    </div>
+</div>
+
+<div id="headerFigures">
+    <div class="title">Figures</div>
+</div>
+
+<div id="categoriesFigures">
+    @{ Html.RenderAction("FiguresMenu", "Figure", new { figureType = FigureType.Circle }); }
+
+</div>
+
+<div id="contentFigures">
+
+    <p>
+        @Html.ActionLink("Create New", "CircleCreate")
+    </p>
+    @using (Html.BeginForm("Circles", "Figure", FormMethod.Post, new { id = "searchForm" }))
+    {
+        ParametrsForView parametrs = new ParametrsForView();
+        @Html.HiddenFor(model => parametrs.Page, new { @id = "searchPage" })
+        <div class="form-group">
+          
+            <div class="col-md-10">
+                @Html.EditorFor(m => parametrs.PartOfName)
+                @Html.ValidationMessageFor(m => parametrs.PartOfName)
+                <input type="submit" value="Search" class="btn btn-default" />
+            </div>
+        </div>
+
+    }
+
+    <table class="table">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Radius
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Cirlces)
+        {
+
+            PagingInfoView pagingInfoView = ViewBag.PageInfo;
+            int id = item.Id;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Radius)
+                </td>
+                <td>
+                    <div class="span5">
+
+                        @using (Html.BeginForm("CircleEdit", "Figure", FormMethod.Get/*, new { onclick = "return confirm('Are sure wants to delete store ?');" }*/))
+                        {
+                            @Html.HiddenFor(model => id)
+                            <input type="submit" value="Edit" />
+                        }
+                    </div>
+                    <div class="span5">
+                        @using (Html.BeginForm("CircleDelete", "Figure", FormMethod.Post, new { onclick = "return confirm('Are sure wants to delete  ?');" }))
+                        {
+                            @Html.HiddenFor(model => id)
+                            <input type="submit" value="Delete" />
+                        }
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+<div class="pager">
+    @Html.PageLinksUsingSubmitForm(Model.PagingInfo, "javascript:PagerClick")
+</div>
+
+<script type="text/javascript">
+    function PagerClick(page) {
+        $('#searchPage').val(page);
+
+        $("#searchForm").submit();
+    }
+</script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

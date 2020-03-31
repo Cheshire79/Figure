@@ -1,0 +1,53 @@
+﻿@using WEBUI.Models.Figures
+@model WEBUI.Models.Figures.FiguresView
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="navbar-header">
+        @Html.ActionLink("Figure", "AllFigures", "Figure", null, new { @class = "navbar-brand" })
+        @Html.ActionLink("Figure stores", "FigureStoreList", "Figurestore", null, new { @class = "navbar-brand" })
+    </div>
+</div>
+
+<div id="headerFigures">
+    <div class="title">Figures</div>
+</div>
+
+<div id="categoriesFigures">
+  
+    @{ Html.RenderAction("FiguresMenu", "Figure", new { figureType = FigureType.All }); }
+</div>
+
+<div id="contentFigures">
+
+    <table class="table">
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Info
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.Figures)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Info)
+            </td>
+            
+        </tr>
+        }
+
+    </table>
+
+</div>
